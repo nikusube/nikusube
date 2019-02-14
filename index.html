@@ -9,11 +9,36 @@
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
     <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/NikusubeWebGL.json", {onProgress: UnityProgress});
-    </script>
+	  UnityLoader.SystemInfo.mobile = false;
+	  var gameInstance = UnityLoader.instantiate(
+		"gameContainer",
+		"Build/Nikusube.json",
+		{ onProgress: UnityProgress }
+	  );
+	</script>
   </head>
   <body>
     <div class="webgl-content">
+	<script>
+	  const doc = document.documentElement;
+	  const content = document.querySelector(".webgl-content");
+	  setInterval(function() {
+		const c = document.querySelector("canvas");
+		if (!c) {
+		  return;
+		}
+		if (doc.clientWidth <= c.clientWidth) {
+		  const scale = doc.clientWidth / c.clientWidth;
+		  content.style.transformOrigin = "top left";
+		  content.style.top = content.style.left = "0";
+		  content.style.transform = "scale(" + scale + ")";
+		} else {
+		  content.style.transformOrigin = "";
+		  content.style.top = content.style.left = "";
+		  content.style.transform = "";
+		}
+	  }, 1000);
+	</script>
       <div id="gameContainer" style="width: 540px; height: 960px"></div>
       <div class="footer">
         <div class="webgl-logo"></div>
